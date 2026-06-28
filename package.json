@@ -1,25 +1,18 @@
 {
   "name": "pi-all-search",
   "version": "1.0.4",
-  "description": "All-in-one search extension for Pi — exa, tavily, anysearch, firecrawl, brave",
+  "description": "All-in-one web search extension for Pi — exa, tavily, anysearch, firecrawl, context7",
   "license": "MIT",
   "type": "module",
   "repository": "github:RealAlexandreAI/pi-all-search",
-  "keywords": [
-    "pi-package",
-    "pi",
-    "search",
-    "extension"
-  ],
+  "keywords": ["pi-package", "pi", "search", "extension"],
   "pi": {
-    "extensions": [
-      "./extensions"
-    ]
+    "extensions": ["./extensions"]
   },
   "dependencies": {
     "@earendil-works/pi-ai": "^0.80.0",
     "@earendil-works/pi-coding-agent": "^0.80.0",
     "@earendil-works/pi-tui": "^0.80.0",
-    "typebox": "^0.34.0"
+    "typebox": "^1.3.1"
   }
 }
