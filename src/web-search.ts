@@ -121,18 +121,19 @@ export function registerWebSearchTool(pi: ExtensionAPI): void {
     name: "web_search",
     label: "Web Search",
     description:
-      "Search the web with automatic provider selection. For stocks/finance, uses Anysearch. For academic papers, uses Exa. For general web, uses Tavily. Falls back automatically if the primary provider fails. Use include_content with web_fetch for full page reading. Use queries (plural) for parallel multi-angle research.",
+      "Search the web with 5 providers (exa, tavily, anysearch, firecrawl, context7). Choose the right provider based on query type. Falls back automatically if the primary provider fails. Use web_fetch for full page content. Use queries (plural) for parallel multi-angle research.",
     promptSnippet:
       "Search the web with automatic or custom routing (set provider='exa' for papers, provider='anysearch' for finance, provider='tavily' for general, provider='context7' for docs).",
     get promptGuidelines() {
       return [
         "Use web_search for information beyond your training data — current events, recent docs, live data.",
-        "Set provider='anysearch' when searching for stock prices, tickers, forex, or CVE vulnerability hashes.",
-        "Set provider='exa' when searching for academic research papers, journals, or DOIs.",
-        "Set provider='tavily' for web pages, coding guides, and fast programming research.",
-        "Set provider='firecrawl' for scraping-heavy sites or when others fail.",
-        "Set provider='context7' for library/framework/API documentation, code examples, and how-to guides.",
-        "Set provider='auto' to let the fast local intent router decide automatically (default).",
+        "Choose the right provider based on the query type:",
+        "  • context7 — library/framework/API documentation, code examples, how-to guides, syntax questions",
+        "  • exa — academic research papers, journals, DOIs, scholarly articles, theses",
+        "  • anysearch — stock prices, tickers, forex, crypto, CVE vulnerabilities, financial data",
+        "  • firecrawl — scraping-heavy sites, code repos, GitHub content, when others fail",
+        "  • tavily — general web search, news, programming guides, fast results (default)",
+        "Set provider='auto' to let the local intent router decide automatically.",
         "After answering, include a \"Sources:\" section with markdown hyperlinks: [Title](URL).",
         "Use web_fetch after web_search to read full page content — web_search returns snippets only.",
         "Use {queries:[...]} with 2-4 varied angles for broader coverage.",
