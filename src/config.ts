@@ -7,27 +7,34 @@ const CONFIG_PATH = join(homedir(), ".pi", "pi-all-search.json");
 
 export interface SearchConfig {
   apiKeys: Record<string, string>;
+  provider?: string;
+  cacheTtlMs?: number;
+  maxResults?: number;
 }
 
 export function loadConfig(): SearchConfig {
   const apiKeys: Record<string, string> = {};
+  const env = process.env;
+
+  for (const meta of PROVIDERS) {
+    const key = env[meta.envVar];
+    if (key) apiKeys[meta.name] = key;
+  }
+
+  let provider: string | undefined;
+  let cacheTtlMs: number | undefined;
+  let maxResults: number | undefined;
 
   try {
     const config = JSON.parse(readFileSync(CONFIG_PATH, "utf8"));
-    for (const meta of PROVIDERS) {
-      const key = config[meta.name + "ApiKey"];
-      if (key) apiKeys[meta.name] = key;
-    }
+    provider = config.provider;
+    cacheTtlMs = config.cacheTtlMs;
+    maxResults = config.maxResults;
   } catch {
-    // fallback to env vars
-    const env = process.env;
-    for (const meta of PROVIDERS) {
-      const key = env[meta.envVar];
-      if (key) apiKeys[meta.name] = key;
-    }
+    // use defaults
   }
 
-  return { apiKeys };
+  return { apiKeys, provider, cacheTtlMs, maxResults };
 }
 
 export function resolveApiKey(name: string, envVar: string, config: SearchConfig): string | undefined {
