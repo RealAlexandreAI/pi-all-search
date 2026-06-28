@@ -21,5 +21,8 @@ jobs:
           node-version: "22"
           registry-url: "https://registry.npmjs.org"
 
+      - name: Upgrade npm
+        run: npm install -g npm@latest
+
       - name: Publish
-        run: npx npm@latest publish --access public
+        run: npm publish --access public
