@@ -20,15 +20,30 @@ export class Context7Provider implements SearchProvider {
     if (!lib) return { results: [] };
 
     const resp = await fetch(
-      `https://context7.com/api/v2/context?libraryId=${encodeURIComponent(lib.id)}&query=${encodeURIComponent(query)}`,
+      `https://context7.com/api/v2/context?libraryId=${encodeURIComponent(lib.id)}&query=${encodeURIComponent(query)}&type=json`,
       { headers: { Authorization: `Bearer ${this.apiKey}` } }
     );
     const data = await resp.json();
-    const results: SearchResult[] = (data.context ?? data.results ?? []).slice(0, maxResults).map((r: any) => ({
-      title: r.title ?? r.name ?? lib.title,
-      url: r.url ?? r.source ?? `https://context7.com${lib.id}`,
-      snippet: r.content ?? r.snippet ?? r.description ?? "",
-    }));
+    const results: SearchResult[] = [];
+
+    for (const snippet of data.codeSnippets ?? []) {
+      if (results.length >= maxResults) break;
+      results.push({
+        title: snippet.pageTitle ?? snippet.codeTitle ?? lib.title,
+        url: snippet.codeId ?? `https://context7.com${lib.id}`,
+        snippet: snippet.codeDescription ?? snippet.codeList?.map((c: any) => c.code).join("\n") ?? "",
+      });
+    }
+
+    for (const snippet of data.infoSnippets ?? []) {
+      if (results.length >= maxResults) break;
+      results.push({
+        title: snippet.breadcrumb ?? snippet.pageId ?? lib.title,
+        url: snippet.pageId ?? `https://context7.com${lib.id}`,
+        snippet: snippet.content ?? "",
+      });
+    }
+
     return { results };
   }
 }
