@@ -128,9 +128,9 @@ export function registerWebSearchTool(pi: ExtensionAPI): void {
         "Use web_search for information beyond your training data — current events, recent docs, live data.",
         "Set provider='anysearch' when searching for stock prices, tickers, forex, or CVE vulnerability hashes.",
         "Set provider='exa' when searching for academic research papers, journals, or DOIs.",
-        "Set provider='tavily' for web pages, coding guides, library docs, and fast programming research.",
-        "Set provider='brave' for general web search with good coverage.",
+        "Set provider='tavily' for web pages, coding guides, and fast programming research.",
         "Set provider='firecrawl' for scraping-heavy sites or when others fail.",
+        "Set provider='context7' for library/framework/API documentation, code examples, and how-to guides.",
         "Set provider='auto' to let the fast local intent router decide automatically (default).",
         "After answering, include a \"Sources:\" section with markdown hyperlinks: [Title](URL).",
         "Use web_fetch after web_search to read full page content — web_search returns snippets only.",
@@ -148,7 +148,7 @@ export function registerWebSearchTool(pi: ExtensionAPI): void {
         }),
       ),
       provider: Type.Optional(
-        StringEnum(["auto", "exa", "tavily", "anysearch", "firecrawl", "brave"], {
+        StringEnum(["auto", "exa", "tavily", "anysearch", "firecrawl", "context7"], {
           description:
             "Directly override the search provider. 'auto' uses local intent routing (default).",
           default: "auto",
