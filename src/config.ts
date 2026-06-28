@@ -3,7 +3,7 @@ import { readFileSync } from "node:fs";
 import { join } from "node:path";
 import { homedir } from "node:os";
 
-const CONFIG_PATH = join(homedir(), ".pi", "web-search.json");
+const CONFIG_PATH = join(homedir(), ".pi", "pi-all-search.json");
 
 export interface SearchConfig {
   apiKeys: Record<string, string>;
