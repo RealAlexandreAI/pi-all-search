@@ -54,6 +54,7 @@ async function executeSingleSearch(
 ): Promise<{ results: SearchResult[]; provider: string; intent: SearchIntent }> {
   const intent = classifyIntent(query);
   const route = routeIntent(intent, providers, requestedProvider);
+  void intent;
 
   let allResults: SearchResult[] = [];
   let usedProvider = route.primary;
@@ -90,7 +91,7 @@ async function executeSingleSearch(
     throw new Error(`All providers failed for "${query}":\n${errors.join("\n")}`);
   }
 
-  return { results: deduplicateResults(allResults), provider: usedProvider, intent };
+  return { results: deduplicateResults(allResults), provider: usedProvider, intent: route.intent };
 }
 
 async function executeSingleSearchWithTimeout(
@@ -122,7 +123,7 @@ export function registerWebSearchTool(pi: ExtensionAPI): void {
     description:
       "Search the web with automatic provider selection. For stocks/finance, uses Anysearch. For academic papers, uses Exa. For general web, uses Tavily. Falls back automatically if the primary provider fails. Use include_content with web_fetch for full page reading. Use queries (plural) for parallel multi-angle research.",
     promptSnippet:
-      "Search the web with automatic or custom routing (set provider='exa' for papers, provider='anysearch' for finance, provider='tavily' for code, provider='brave' for general).",
+      "Search the web with automatic or custom routing (set provider='exa' for papers, provider='anysearch' for finance, provider='tavily' for general, provider='context7' for docs).",
     get promptGuidelines() {
       return [
         "Use web_search for information beyond your training data — current events, recent docs, live data.",
