@@ -10,15 +10,20 @@ pi install npm:pi-all-search
 
 ## Configure
 
-Set API keys in environment or `~/.pi/web-search.json`:
+Set API keys in `~/.pi/agent/extensions/pi-all-search/config.json`:
 
 ```json
 {
-  "exaApiKey": "exa-...",
-  "tavilyApiKey": "tvly-...",
-  "anysearchApiKey": "as_sk_...",
-  "firecrawlApiKey": "fc-...",
-  "context7ApiKey": "ctx7sk_..."
+  "apiKeys": {
+    "exa": "exa-...",
+    "tavily": "tvly-...",
+    "anysearch": "as_sk_...",
+    "firecrawl": "fc-...",
+    "context7": "ctx7sk_..."
+  },
+  "provider": "auto",
+  "cacheTtlMs": 300000,
+  "maxResults": 5
 }
 ```
 
