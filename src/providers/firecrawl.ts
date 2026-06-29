@@ -12,6 +12,7 @@ export class FirecrawlProvider implements SearchProvider {
       headers: { "Content-Type": "application/json", Authorization: `Bearer ${this.apiKey}` },
       body: JSON.stringify({ query, limit: maxResults }),
     });
+    if (!resp.ok) throw new Error(`Firecrawl HTTP ${resp.status}`);
     const data = await resp.json();
     const results: SearchResult[] = (data.data ?? []).map((r: any) => ({
       title: r.title ?? "",

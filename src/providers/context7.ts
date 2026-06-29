@@ -11,6 +11,7 @@ export class Context7Provider implements SearchProvider {
       `https://context7.com/api/v2/libs/search?libraryName=${encodeURIComponent(query)}&query=${encodeURIComponent(query)}`,
       { headers: { Authorization: `Bearer ${this.apiKey}` } }
     );
+    if (!resp.ok) throw new Error(`Context7 library search HTTP ${resp.status}`);
     const data = await resp.json();
     return data.results?.[0] ?? null;
   }
@@ -23,6 +24,7 @@ export class Context7Provider implements SearchProvider {
       `https://context7.com/api/v2/context?libraryId=${encodeURIComponent(lib.id)}&query=${encodeURIComponent(query)}&type=json`,
       { headers: { Authorization: `Bearer ${this.apiKey}` } }
     );
+    if (!resp.ok) throw new Error(`Context7 context HTTP ${resp.status}`);
     const data = await resp.json();
     const results: SearchResult[] = [];
 

@@ -17,6 +17,7 @@ export class ExaProvider implements SearchProvider {
         contents: { text: { maxCharacters: 300 } },
       }),
     });
+    if (!resp.ok) throw new Error(`Exa HTTP ${resp.status}`);
     const data = await resp.json();
     const results: SearchResult[] = (data.results ?? []).map((r: any) => ({
       title: r.title ?? "",

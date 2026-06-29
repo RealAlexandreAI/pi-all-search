@@ -13,6 +13,7 @@ export class TavilyProvider implements SearchProvider {
       body: JSON.stringify({ api_key: this.apiKey, query, max_results: maxResults, search_depth: "basic" }),
       signal,
     });
+    if (!resp.ok) throw new Error(`Tavily HTTP ${resp.status}`);
     const data = await resp.json();
     const results: SearchResult[] = (data.results ?? []).map((r: any) => ({
       title: r.title ?? "",
@@ -30,6 +31,7 @@ export class TavilyProvider implements SearchProvider {
       body: JSON.stringify({ api_key: this.apiKey, query, search_depth: "advanced", include_answer: true }),
       signal,
     });
+    if (!resp.ok) throw new Error(`Tavily research HTTP ${resp.status}`);
     const data = await resp.json();
     return data.answer ?? "";
   }

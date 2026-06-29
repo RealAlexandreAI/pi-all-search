@@ -20,6 +20,7 @@ export class AnysearchProvider implements SearchProvider {
         params: { name: "search", arguments: { query, max_results: maxResults } },
       }),
     });
+    if (!resp.ok) throw new Error(`AnySearch HTTP ${resp.status}`);
     const data = await resp.json();
     const text = data.result?.content?.[0]?.text ?? "";
     return { results: this.parseResults(text) };

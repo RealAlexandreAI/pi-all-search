@@ -164,7 +164,6 @@ export function registerWebSearchTool(pi: ExtensionAPI): void {
           default: DEFAULT_RESULTS,
         }),
       ),
-      freshness: Type.Optional(StringEnum(["day", "week", "month", "year"], { description: "Filter by recency." })),
     }),
 
     async execute(_toolCallId, params, signal, onUpdate) {
