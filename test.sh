@@ -5,7 +5,7 @@ set -e
 echo "=== Testing pi-all-search ==="
 
 # Test 1: Config file exists
-if [ -f ~/.pi/pi-all-search.json ]; then
+if [ -f config.json ]; then
   echo "✓ Config file exists"
 else
   echo "✗ Config file missing"
@@ -15,14 +15,14 @@ fi
 # Test 2: API keys in environment
 if [ -n "$EXA_API_KEY" ] || [ -n "$TAVILY_API_KEY" ] || [ -n "$ANYSEARCH_API_KEY" ]; then
   echo "✓ API keys configured (env vars)"
-elif grep -q "ApiKey" ~/.pi/pi-all-search.json 2>/dev/null; then
+elif grep -q "apiKey" config.json 2>/dev/null; then
   echo "✓ API keys configured (config file)"
 else
   echo "⚠ No API keys found (search will use fallback)"
 fi
 
 # Test 3: Extension files exist
-cd /Users/slahser/Desktop/pi-all-search
+cd /Users/slahser/Desktop/usaslahser/pi-all-search
 if [ -f "extensions/index.ts" ] && [ -f "src/web-search.ts" ] && [ -f "src/extract.ts" ]; then
   echo "✓ Extension files exist"
 else

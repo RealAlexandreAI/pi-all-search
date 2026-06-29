@@ -1,9 +1,12 @@
 import { PROVIDERS } from "./providers/index.js";
 import { readFileSync } from "node:fs";
 import { join } from "node:path";
-import { homedir } from "node:os";
+import { fileURLToPath } from "node:url";
+import { dirname } from "node:path";
 
-const CONFIG_PATH = join(homedir(), ".pi", "pi-all-search.json");
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+const CONFIG_PATH = join(__dirname, "..", "config.json");
 
 export interface SearchConfig {
   apiKeys: Record<string, string>;
