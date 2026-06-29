@@ -30,6 +30,12 @@ export function loadConfig(): SearchConfig {
     provider = config.provider;
     cacheTtlMs = config.cacheTtlMs;
     maxResults = config.maxResults;
+    // Config apiKeys override env
+    if (config.apiKeys) {
+      for (const [name, key] of Object.entries(config.apiKeys)) {
+        if (key) apiKeys[name] = key;
+      }
+    }
   } catch {
     // use defaults
   }
