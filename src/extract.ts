@@ -60,7 +60,7 @@ export function registerExtractTool(pi: ExtensionAPI): void {
         }
 
         return {
-          content: [{ type: "text", content }],
+          content: [{ type: "text", text: content }],
           details: { url, contentType, length: content.length },
         };
       } catch (err) {

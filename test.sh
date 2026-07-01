@@ -43,4 +43,16 @@ for provider in exa tavily anysearch firecrawl context7; do
   fi
 done
 
+# Test 5: web_fetch returns Pi text blocks (not { type, content })
+if grep -q 'content: \[{ type: "text", text: content }\]' src/extract.ts; then
+  echo "✓ web_fetch success path uses text field"
+else
+  echo "✗ web_fetch must return { type: \"text\", text: ... }"
+  exit 1
+fi
+if grep -q 'content: \[{ type: "text", content }\]' src/extract.ts; then
+  echo "✗ web_fetch still uses invalid content field on text blocks"
+  exit 1
+fi
+
 echo "=== pi-all-search tests passed ==="
