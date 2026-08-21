@@ -2,6 +2,7 @@ import { test, describe } from "node:test";
 import assert from "node:assert/strict";
 import { classifyIntent, routeIntent } from "../src/router.js";
 import { deduplicateResults, SafeMemoryCache } from "../src/utils.js";
+import { parseDeveloperResults } from "../src/providers/firecrawl-dev.js";
 import type { SearchProvider } from "../src/providers/types.js";
 
 function mockProvider(name: string): SearchProvider {
@@ -46,7 +47,7 @@ describe("classifyIntent", () => {
 
 describe("routeIntent", () => {
   const providers = new Map<string, SearchProvider>();
-  for (const id of ["tavily", "exa", "anysearch", "firecrawl", "context7"]) {
+  for (const id of ["tavily", "exa", "anysearch", "firecrawl", "firecrawl-dev", "context7"]) {
     providers.set(id, mockProvider(id));
   }
 
@@ -65,6 +66,12 @@ describe("routeIntent", () => {
   test("docs intent prefers context7 first", () => {
     const r = routeIntent("docs", providers);
     assert.equal(r.primary, "context7");
+  });
+
+  test("technical intent prefers firecrawl-dev first", () => {
+    const r = routeIntent("technical", providers);
+    assert.equal(r.primary, "firecrawl-dev");
+    assert.ok(r.secondary.includes("firecrawl"));
   });
 
   test("news intent prefers tavily first", () => {
@@ -111,6 +118,25 @@ describe("deduplicateResults", () => {
       { title: "b", url: "https://x.com/2" },
     ] as any[];
     assert.equal(deduplicateResults(results).length, 2);
+  });
+});
+
+describe("parseDeveloperResults", () => {
+  test("maps artifact payload to SearchResult", () => {
+    const out = parseDeveloperResults({
+      data: [
+        { id: "issue:owner/repo#123", title: "Bug: retries not honored", url: "https://github.com/owner/repo/issues/123", description: "Fix for retry logic" },
+        { id: "readme:owner/repo", url: "https://github.com/owner/repo", passages: ["# repo", "semantic retrieval"] },
+      ],
+    });
+    assert.equal(out.length, 2);
+    assert.equal(out[0].title, "Bug: retries not honored");
+    assert.equal(out[1].snippet, "# repo semantic retrieval");
+  });
+
+  test("handles empty payload", () => {
+    assert.deepEqual(parseDeveloperResults({ data: [] }), []);
+    assert.deepEqual(parseDeveloperResults(undefined), []);
   });
 });
 

@@ -121,9 +121,9 @@ export function registerWebSearchTool(pi: ExtensionAPI): void {
     name: "web_search",
     label: "Web Search",
     description:
-      "Search the web with 5 providers (exa, tavily, anysearch, firecrawl, context7). Choose the right provider based on query type. Falls back automatically if the primary provider fails. Use web_fetch for full page content. Use queries (plural) for parallel multi-angle research.",
+      "Search the web with 6 providers (exa, tavily, anysearch, firecrawl, firecrawl-dev, context7). Choose the right provider based on query type. Falls back automatically if the primary provider fails. Use web_fetch for full page content. Use queries (plural) for parallel multi-angle research.",
     promptSnippet:
-      "Search the web with automatic or custom routing (set provider='exa' for papers, provider='anysearch' for finance, provider='tavily' for general, provider='context7' for docs).",
+      "Search the web with automatic or custom routing (set provider='exa' for papers, provider='anysearch' for finance, provider='tavily' for general, provider='context7' for docs, provider='firecrawl-dev' for repos/issues/PRs).",
     get promptGuidelines() {
       return [
         "Use web_search for information beyond your training data — current events, recent docs, live data.",
@@ -132,6 +132,7 @@ export function registerWebSearchTool(pi: ExtensionAPI): void {
         "  • exa — academic research papers, journals, DOIs, scholarly articles, theses",
         "  • anysearch — stock prices, tickers, forex, crypto, CVE vulnerabilities, financial data",
         "  • firecrawl — scraping-heavy sites, code repos, GitHub content, when others fail",
+        "  • firecrawl-dev — Firecrawl Developer Index: repo discovery, issues, PRs, OpenAPI specs, skills (semantic, artifact-indexed)",
         "  • tavily — general web search, news, programming guides, fast results (default)",
         "Set provider='auto' to let the local intent router decide automatically.",
         "After answering, include a \"Sources:\" section with markdown hyperlinks: [Title](URL).",
@@ -150,7 +151,7 @@ export function registerWebSearchTool(pi: ExtensionAPI): void {
         }),
       ),
       provider: Type.Optional(
-        StringEnum(["auto", "exa", "tavily", "anysearch", "firecrawl", "context7"], {
+        StringEnum(["auto", "exa", "tavily", "anysearch", "firecrawl", "firecrawl-dev", "context7"], {
           description:
             "Directly override the search provider. 'auto' uses local intent routing (default).",
           default: "auto",

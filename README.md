@@ -37,6 +37,7 @@ web_search({ queries: ["React vs Vue", "Angular vs Svelte"] })
 web_search({ query: "AAPL stock price", provider: "anysearch" })
 web_search({ query: "rust async programming", provider: "tavily" })
 web_search({ query: "Next.js caching", provider: "context7" })
+web_search({ query: "library for incremental PDF parsing", provider: "firecrawl-dev" })
 ```
 
 ## Providers
@@ -47,6 +48,7 @@ web_search({ query: "Next.js caching", provider: "context7" })
 | **tavily** | General web, programming, fast results | `TAVILY_API_KEY` |
 | **anysearch** | Finance, stocks, structured data | `ANYSEARCH_API_KEY` |
 | **firecrawl** | Scraping-heavy sites, fallback | `FIRECRAWL_API_KEY` |
+| **firecrawl-dev** | Firecrawl Developer Index: repo discovery, issues, PRs, OpenAPI specs, skills (semantic artifact index) | `FIRECRAWL_API_KEY` |
 | **context7** | Library/framework/API documentation | `CONTEXT7_API_KEY` |
 
 ## Routing
@@ -56,6 +58,7 @@ Automatic intent-based routing:
 - **Academic queries** → exa → anysearch → tavily
 - **General queries** → tavily → exa → anysearch → firecrawl
 - **Docs queries** → context7 → exa → tavily
+- **Technical queries** (github/repo/issue/PR/commit) → firecrawl-dev → firecrawl → exa → tavily
 
 Override with `provider="exa"` etc.
 

@@ -22,7 +22,7 @@ const INTENT_PROVIDERS: Record<SearchIntent, string[]> = {
   finance: ["anysearch", "exa", "tavily"],
   academic: ["exa", "anysearch", "tavily"],
   docs: ["context7", "exa", "tavily"],
-  technical: ["firecrawl", "exa", "tavily"],
+  technical: ["firecrawl-dev", "firecrawl", "exa", "tavily"],
   news: ["tavily", "anysearch", "exa"],
   general: ["tavily", "anysearch", "exa", "firecrawl"],
 };

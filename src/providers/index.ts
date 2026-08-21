@@ -2,6 +2,7 @@ import { EXA_META, ExaProvider } from "./exa.js";
 import { TAVILY_META, TavilyProvider } from "./tavily.js";
 import { ANYSEARCH_META, AnysearchProvider } from "./anysearch.js";
 import { FIRECRAWL_META, FirecrawlProvider } from "./firecrawl.js";
+import { FIRECRAWL_DEV_META, FirecrawlDevProvider } from "./firecrawl-dev.js";
 import { CONTEXT7_META, Context7Provider } from "./context7.js";
 import type { SearchProvider } from "./types.js";
 
@@ -16,6 +17,7 @@ export const PROVIDERS: readonly ProviderMeta[] = [
   TAVILY_META,
   ANYSEARCH_META,
   FIRECRAWL_META,
+  FIRECRAWL_DEV_META,
   CONTEXT7_META,
 ];
 
@@ -29,6 +31,8 @@ export function createProvider(name: string, apiKey: string): SearchProvider {
       return new AnysearchProvider(apiKey);
     case "firecrawl":
       return new FirecrawlProvider(apiKey);
+    case "firecrawl-dev":
+      return new FirecrawlDevProvider(apiKey);
     case "context7":
       return new Context7Provider(apiKey);
     default:
