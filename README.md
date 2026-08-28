@@ -29,6 +29,8 @@ Set API keys in `~/.pi/agent/extensions/pi-all-search/config.json`:
 
 Or set environment variables: `EXA_API_KEY`, `TAVILY_API_KEY`, `ANYSEARCH_API_KEY`, `FIRECRAWL_API_KEY`, `CONTEXT7_API_KEY`.
 
+Firecrawl works without a key (IP-based free credits). Office NAT / CI sharing an egress IP share the keyless daily credits.
+
 ## Usage
 
 ```
